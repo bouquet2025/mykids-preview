@@ -46,3 +46,14 @@ footer{background:#1d2433;color:#cfd4e2;padding:36px 0 90px;font-size:14px}foote
  nav.on{display:flex}.burger{display:block;margin-left:auto}.dd .menu{position:static;display:block;border:0;box-shadow:none;padding-left:12px}
  .bar>.btn{display:none}.fixwa{display:block}.pbar{top:64px}
 }
+table{display:block;overflow-x:auto}
+
+.hgrid{display:grid;gap:24px;grid-template-columns:1.1fr .9fr;align-items:center}
+.hgrid .ph{min-height:280px}
+.steps{counter-reset:s;display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));padding:0;list-style:none}
+.steps li{counter-increment:s;border:1px solid var(--line);border-radius:12px;padding:14px}
+.steps li:before{content:counter(s);display:inline-block;background:var(--acc);color:#fff;border-radius:50%;width:26px;height:26px;text-align:center;margin-right:8px}
+.price{font-size:22px;font-weight:700;color:var(--acc);margin-top:8px}
+.fld{display:grid;gap:12px;max-width:520px}.fld select,.fld input{width:100%;padding:10px;font:inherit}
+@media(max-width:860px){.hgrid{grid-template-columns:1fr}.hgrid .ph{min-height:180px}}
+.logo img{display:block;height:40px;width:auto}

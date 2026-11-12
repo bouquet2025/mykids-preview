@@ -1,5 +1,5 @@
 <!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="robots" content="noindex,nofollow"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>My Kids — страница парка</title><link rel="stylesheet" href="style.css"></head><body>
+<title>My Kids - страница парка</title><link rel="stylesheet" href="style.css"></head><body data-nocta="1">
 <main id="m"></main>
 <script src="data.js"></script><script src="app.js"></script>
 <script>
@@ -23,14 +23,19 @@ document.addEventListener('DOMContentLoaded',()=>{
  <div class="pbar"><div class="wrap"><a href="#about">О парке</a><a href="#photos">Фото</a><a href="#zones">Зоны</a><a href="#prices">Цены</a><a href="#bday">День рождения</a><a href="#shows">Шоу</a><a href="#games">Игры</a><a href="#animators">Аниматоры</a><a href="#masterclass">Мастер-классы</a><a href="#info">Практическая информация</a><a href="#faq">FAQ</a></div></div>
  ${blk('about','О парке',`<p>Описание парка. Текст вносит маркетинг в CMS.</p>`,'Парк')}
  ${blk('photos','Фотографии',`<div class="grid">${ph('фото')}${ph('фото')}${ph('фото')}</div>`,'Парк')}
- ${blk('zones','Игровые и активные зоны',`<div class="grid"><div class="card"><h3>Зона 1</h3><p>Название, описание, возраст</p></div><div class="card"><h3>Зона 2</h3><p>Название, описание, возраст</p></div></div>`,'Парк')}
- ${blk('prices','Цены этого парка',`<table><tr><th>Категория</th><th>Будни</th><th>Выходные и праздничные</th></tr><tr><td>[категория]</td><td>—</td><td>—</td></tr><tr><td>[категория]</td><td>—</td><td>—</td></tr></table><p style="color:var(--mut)">Реальные цены и названия категорий вносит команда в CMS.</p>`,'Цена (этот парк)')}
+ ${blk('zones','Игровые и активные зоны',`<div class="grid"><div class="card"><div class="ph" style="min-height:100px">фото</div><h3>Зона 1</h3><p>Короткое описание. Возраст: [от и до]</p><details><summary>Подробнее</summary><p>Полное описание зоны</p></details></div><div class="card"><div class="ph" style="min-height:100px">фото</div><h3>Зона 2</h3><p>Короткое описание. Возраст: [от и до]</p><details><summary>Подробнее</summary><p>Полное описание зоны</p></details></div></div>`,'Парк')}
+ ${blk('prices','Цены этого парка',`<table><tr><th>Категория</th><th>Будни</th><th>Выходные и праздничные</th></tr><tr><td>[категория]</td><td>-</td><td>-</td></tr><tr><td>[категория]</td><td>-</td><td>-</td></tr></table><p style="color:var(--mut)">Реальные цены и названия категорий вносит команда в CMS.</p>`,'Цена (этот парк)')}
  ${blk('bday','День рождения и пакеты',`<div class="grid"><div class="card"><h3>Пакет 1</h3><p>Состав, цена, длительность</p><br><button class="btn wa" onclick="window.open(waLink(PARKS.find(x=>x.slug==='${p.slug}'),'Здравствуйте! Хочу забронировать День рождения в My Kids (${p.city}). Пакет: Пакет 1. Детей: __. Дата: __.'))">Забронировать пакет</button></div><div class="card"><h3>Пакет 2</h3><p>Состав, цена, длительность</p></div></div>`,'Пакет, Доп. услуга')}
  ${blk('shows','Шоу-программы',`<div class="grid"><div class="card"><h3>Шоу 1</h3><p>Описание</p></div></div>`,'Программа')}
  ${blk('games','Игры',`<div class="grid"><div class="card"><h3>Игра 1</h3><p>Описание, возраст</p></div></div>`,'Игра')}
  ${blk('animators','Аниматоры',`<div class="grid"><div class="card">${ph('фото',120)}<h3>Имя аниматора</h3><p>Образ, возраст детей</p></div></div>`,'Аниматор')}
  ${blk('masterclass','Мастер-классы',`<div class="grid"><div class="card"><h3>Мастер-класс 1</h3><p>Описание, длительность</p></div></div>`,'Программа')}
- ${blk('info','Практическая информация',`<div class="facts"><div><b>Адрес</b>${p.addr||'уточняется'}</div><div><b>График</b>${p.hours||'уточняется'}</div><div><b>Контакт</b>${p.wa?'WhatsApp парка':'уточняется'}</div><div><b>Карта</b>${p.map?`<a href="${p.map}" target="_blank">2ГИС</a> · Google`:'уточняется'}</div><div><b>Правила</b>…</div><div><b>Парковка</b>…</div><div><b>Торты</b>…</div><div><b>Одежда</b>…</div><div><b>Сопровождающие</b>…</div></div>${ph('карта 2ГИС / Google',220)}`,'Парк')}
+ ${blk('info','Практическая информация',`<p class="note">Важно знать: [носки или тапочки обязательны, бронь заранее]. Текст вносит маркетинг.</p><div class="grid">
+<div class="card"><h3>График</h3><p>${p.hours||'уточняется'}<br>Праздничные дни: [график]<br><small>График может меняться, актуальное уточняйте в WhatsApp.</small></p></div>
+<div class="card"><h3>Адрес и карта</h3><p>${p.addr?p.city+', '+p.addr:'уточняется'}<br>${p.map?`<a href="${p.map}" target="_blank">2ГИС</a> · <a href="${gmap(p)}" target="_blank">Google</a>`:''}</p></div>
+<div class="card"><h3>Контакты</h3><p>${p.wa?fmtPhone(p.wa)+'<br>WhatsApp парка':'уточняется'}</p></div>
+<div class="card"><h3>Правила посещения</h3><p>Текст</p></div><div class="card"><h3>Условия пребывания</h3><p>Текст</p></div><div class="card"><h3>Сопровождающие</h3><p>Текст</p></div>
+<div class="card"><h3>Одежда, носки и тапочки</h3><p>Текст</p></div><div class="card"><h3>Парковка</h3><p>Текст</p></div><div class="card"><h3>Торты</h3><p>Текст</p></div><div class="card"><h3>Другая важная информация</h3><p>Текст</p></div></div>${ph('карта 2ГИС / Google',220)}`,'Парк')}
  ${blk('faq','Вопросы и ответы',`<details><summary>Вопрос 1</summary><p>Ответ</p></details><details><summary>Вопрос 2</summary><p>Ответ</p></details>`,'Вопрос FAQ (все парки или этот)')}
  <section class="blk"><div class="wrap" style="text-align:center"><h2>Забронируйте посещение в ${title}</h2><button class="btn wa" onclick="book(PARKS.find(x=>x.slug==='${p.slug}'))">Написать в WhatsApp</button></div></section>`;
 });

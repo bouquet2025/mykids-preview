@@ -1,0 +1,7 @@
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="robots" content="noindex,nofollow"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Контакты | My Kids</title><link rel="stylesheet" href="style.css"></head><body>
+<main class="wrap" style="padding-bottom:48px"><div class="crumbs"><a href="index.html">Главная</a> / Контакты</div><h1>Контакты</h1>
+<p class="note">ПРОТОТИП. Данные парков из справочника. Соцсети и реквизиты внесёт маркетинг.</p><div class="grid" id="cl"></div>
+<h2>Соцсети</h2><p>[Instagram] · [TikTok] · [Facebook]</p><h2>Реквизиты</h2><p>[Наименование юрлица, БИН, адрес]</p></main>
+<script src="data.js"></script><script src="app.js"></script>
+<script>document.addEventListener('DOMContentLoaded',()=>{$('#cl').innerHTML=PARKS.map(p=>`<div class="card"><h3>${pname(p)}</h3><p>${p.addr?p.addr+'<br>'+p.hours+'<br>Телефон: '+fmtPhone(p.wa):'Данные уточняются'}</p>${p.wa?`<br><a class="btn wa" href="${waLink(p,bookText(p))}" target="_blank">WhatsApp</a> `:''}${p.map?`<p style="margin-top:10px"><a href="${p.map}" target="_blank">2ГИС</a> · <a href="${gmap(p)}" target="_blank">Google</a></p>`:''}</div>`).join('');})</script></body></html>

@@ -1,0 +1,19 @@
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="robots" content="noindex,nofollow"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Праздники и группы | My Kids</title><link rel="stylesheet" href="style.css"></head><body>
+<main class="wrap" style="padding-bottom:48px"><div class="crumbs"><a href="index.html">Главная</a> / <a href="birthday.html">День рождения</a> / Праздники и группы</div><h1>Праздники и группы</h1>
+<p class="note">ПРОТОТИП. Форма данные никуда не отправляет, кнопки открывают WhatsApp выбранного парка с заполненным текстом.</p>
+<h2>Для кого подходит</h2><div class="grid"><div class="card"><h3>Корпоративы</h3></div><div class="card"><h3>Школы</h3></div><div class="card"><h3>Кружки</h3></div><div class="card"><h3>Группы</h3></div></div>
+<h2>Форматы и условия</h2><div class="grid"><div class="card"><h3>[Формат 1]</h3><p>Детей: [от и до]. Длительность: [время]. Что входит: [состав]</p></div><div class="card"><h3>[Формат 2]</h3><p>Детей: [от и до]. Длительность: [время]. Что входит: [состав]</p></div><div class="card"><h3>[Формат 3]</h3><p>Детей: [от и до]. Длительность: [время]. Что входит: [состав]</p></div></div>
+<form id="f" style="display:grid;gap:12px;max-width:480px;margin-top:32px"><h2 style="margin:0">Заявка</h2>
+<label>Парк<select id="fp" required style="width:100%;padding:10px"></select></label>
+<label>Формат<select id="ff" style="width:100%;padding:10px"><option>[Формат 1]</option><option>[Формат 2]</option><option>[Формат 3]</option><option>Другое</option></select></label>
+<label>Количество детей<input id="fn" type="number" min="1" required style="width:100%;padding:10px"></label>
+<label>Желаемая дата<input id="fd" type="date" style="width:100%;padding:10px"></label>
+<label>Контакт (имя, телефон)<input id="fc" required style="width:100%;padding:10px"></label>
+<button class="btn wa" type="submit">Отправить заявку в WhatsApp</button></form>
+<p style="margin-top:24px">Или без формы: <button class="btn sec" type="button" id="fw">Написать в WhatsApp</button></p></main>
+<script src="data.js"></script><script src="app.js"></script>
+<script>document.addEventListener('DOMContentLoaded',()=>{const fp=$('#fp');fp.innerHTML=PARKS.filter(p=>p.wa).map(p=>`<option value="${p.slug}" ${p.slug===chosen?'selected':''}>${p.city}, ${p.name}</option>`).join('');
+const P=()=>PARKS.find(x=>x.slug===fp.value);
+$('#f').onsubmit=e=>{e.preventDefault();const p=P();window.open(waLink(p,`Здравствуйте! Интересует мероприятие для группы в My Kids (${p.city}). Формат: ${$('#ff').value}. Детей: ${$('#fn').value}.${$('#fd').value?' Дата: '+$('#fd').value+'.':''} Контакт: ${$('#fc').value}.`),'_blank')};
+$('#fw').onclick=()=>{const p=P();window.open(waLink(p,`Здравствуйте! Интересует мероприятие для группы в My Kids (${p.city}). Формат: ___. Детей: ___.`),'_blank')};})</script></body></html>

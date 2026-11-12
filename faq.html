@@ -1,0 +1,12 @@
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="robots" content="noindex,nofollow"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FAQ | My Kids</title><link rel="stylesheet" href="style.css"></head><body>
+<main class="wrap" style="padding-bottom:48px"><div class="crumbs"><a href="index.html">Главная</a> / FAQ</div><h1>Вопросы и ответы</h1>
+<p class="note">ПРОТОТИП. Вопросы взяты из ТЗ, ответы вносит команда My Kids. Если ответ зависит от парка, он привязывается к списку парков.</p>
+<label>Парк <select id="fs" style="padding:10px"></select></label><div id="fl" style="margin-top:16px"></div></main>
+<script src="data.js"></script><script src="app.js"></script>
+<script>document.addEventListener('DOMContentLoaded',()=>{const G={'Посещение':['С какого возраста можно посещать парк?','Есть ли отдельная зона для малышей до 3 лет?','Сколько времени действует один билет?','Что будет, если мы задержимся дольше оплаченного времени?','Можно ли выйти и вернуться в течение дня по одному билету?','Какие правила безопасности действуют в парке?','Какую одежду необходимо надеть и что можно приобрести на территории парка?','Обязательно ли присутствие взрослого рядом с ребёнком?','Сколько сопровождающих проходят бесплатно?','Есть ли зона или кафе для родителей, пока ребёнок играет?','Разрешена ли фото- и видеосъёмка в парке?','Что делать при травме: есть ли аптечка и кто несёт ответственность?'],
+'День рождения':['Нужна ли предоплата?','Как перенести или отменить праздник?','Можно ли принести свой торт?','Сколько длится праздник?'],
+'Бронирование и оплата':['Как забронировать?','Какие способы оплаты?','За сколько дней бронировать?'],
+'Корпоративным клиентам':['Есть ли скидки для групп?','Можно ли провести мероприятие вне графика?']};
+$('#fs').innerHTML='<option value="">Все парки</option>'+PARKS.map(p=>`<option value="${p.slug}" ${p.slug===chosen?'selected':''}>${p.city}, ${p.name}</option>`).join('');
+const r=()=>{$('#fl').innerHTML=Object.entries(G).map(([g,q])=>`<h2>${g}</h2>`+q.map(x=>`<details><summary>${x}</summary><p>Ответ вносит команда My Kids.</p></details>`).join('')).join('')};$('#fs').onchange=r;r();})</script></body></html>

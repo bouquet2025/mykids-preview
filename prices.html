@@ -1,0 +1,12 @@
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="robots" content="noindex,nofollow"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Цены | My Kids</title><link rel="stylesheet" href="style.css"></head><body>
+<main class="wrap" style="padding-bottom:48px"><div class="crumbs"><a href="index.html">Главная</a> / Цены</div><h1>Цены</h1>
+<p class="note">ПРОТОТИП. Суммы и условия условные, реальные вносит команда в CMS.</p>
+<h3>Что важно знать</h3><ul><li>[Носки или тапочки обязательны]</li><li>[Цены на будни и на выходные и праздники отличаются]</li><li>[Длительность сеанса]</li><li>[Условия для сопровождающих]</li></ul>
+<h2>Выберите парк</h2><div class="grid" id="pk" style="margin-bottom:24px"></div><div id="out"></div></main>
+<script src="data.js"></script><script src="app.js"></script>
+<script>document.addEventListener('DOMContentLoaded',()=>{const pk=$('#pk');window.draw=()=>{pk.innerHTML=PARKS.map(p=>`<button class="card" style="text-align:left;cursor:pointer;${p.slug===chosen?'border-color:var(--acc);border-width:2px':''}" onclick="chosen='${p.slug}';localStorage.setItem('park',chosen);draw();show()"><h3>${p.city}</h3><p>${p.name}</p></button>`).join('')};window.show=()=>{const p=getPark();$('#out').innerHTML=p?`<h2>${pname(p)}</h2>
+<h3>Стоимость посещения</h3><table><tr><th>Тариф</th><th>Условия</th><th>Будни</th><th>Выходные и праздничные</th></tr><tr><td>[Ребёнок]</td><td>[возраст, время]</td><td>-</td><td>-</td></tr><tr><td>[Малыш]</td><td>[возраст]</td><td>-</td><td>-</td></tr><tr><td>[Взрослый]</td><td>[условия]</td><td>-</td><td>-</td></tr><tr><td>[Сопровождающий]</td><td>[условия]</td><td>-</td><td>-</td></tr></table>
+<h3>Пакеты</h3><div class="grid"><div class="card"><h3>[Пакет 1]</h3><p>Состав</p><div class="price">[цена]</div></div><div class="card"><h3>[Пакет 2]</h3><p>Состав</p><div class="price">[цена]</div></div></div>
+<h3>Дополнительные услуги</h3><table><tr><td>[Услуга 1]</td><td>-</td></tr><tr><td>[Услуга 2]</td><td>-</td></tr></table>
+<p><span class="tag">данные: Цена, Пакет, Доп. услуга (этот парк)</span></p><p><button class="btn" onclick="book(getPark())">Забронировать</button> <a class="btn sec" href="${parkUrl(p)}">Страница парка</a></p>`:'<p style="color:var(--mut)">Выберите парк, чтобы увидеть цены.</p>'};draw();show();})</script></body></html>

@@ -1,22 +1,28 @@
 <!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="robots" content="noindex,nofollow"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>My Kids — прототип главной</title><link rel="stylesheet" href="style.css"></head><body>
-<section class="hero"><div class="wrap">
+<title>My Kids</title><link rel="stylesheet" href="style.css"></head><body>
+<section class="hero"><div class="wrap hgrid"><div>
  <p class="note">ПРОТОТИП (вайрфрейм). Тексты и картинки временные, финальный дизайн будет на этапе 2.</p>
- <h1>Детские парки My Kids в Казахстане</h1>
- <p>Игровые зоны, дни рождения и праздники. Выберите свой парк и забронируйте в WhatsApp.</p>
+ <h1>My Kids</h1>
+ <p>Детские парки в 8 городах Казахстана: игровые зоны, дни рождения, шоу и праздники для групп. Выберите свой парк и забронируйте в WhatsApp.</p>
  <button class="btn" onclick="book()">Забронировать</button>
- <a class="btn sec" href="#parks">Найти парк</a>
+ <a class="btn sec" href="#parks">Выбрать парк</a></div>
+ <div class="ph">фото реального парка (без обрезанных лиц детей)</div>
 </div></section>
+<section class="blk"><div class="wrap"><h2>Акции</h2><div class="ph" style="min-height:120px">место под акцию или слайдер, блок ведёт маркетинг, пустой не показывается</div>
+ <div class="grid" style="margin-top:16px"><div class="card"><h3>Тариф 1</h3><p>Условия</p><div class="price">от [цена]</div></div><div class="card"><h3>Тариф 2</h3><p>Условия</p><div class="price">от [цена]</div></div><div class="card"><h3>Тариф 3</h3><p>Условия</p><div class="price">от [цена]</div></div></div></div></section>
 <section class="blk" id="parks"><div class="wrap"><h2>Наши парки</h2><div class="grid" id="pg"></div></div></section>
-<section class="blk"><div class="wrap"><h2>Направления</h2><div class="grid">
- <a class="card" href="#"><div class="ph">фото</div><h3>Игровые зоны</h3><p>Аттракционы и лабиринты для детей</p></a>
- <a class="card" href="#"><div class="ph">фото</div><h3>День рождения</h3><p>Пакеты, шоу, аниматоры</p></a>
- <a class="card" href="#"><div class="ph">фото</div><h3>Праздники и группы</h3><p>Выпускные, школы, корпоративы</p></a>
- <a class="card" href="#"><div class="ph">фото</div><h3>Цены</h3><p>Выберите парк и посмотрите цены</p></a>
+<section class="blk"><div class="wrap"><h2>Что есть в My Kids</h2><div class="grid">
+ <div class="card"><div class="ph">фото</div><h3>Игровые зоны</h3><p>Название, короткое описание</p></div>
+ <div class="card"><div class="ph">фото</div><h3>Активные зоны</h3><p>Название, короткое описание</p></div>
+ <div class="card"><div class="ph">фото</div><h3>Мини-игры</h3><p>Название, короткое описание</p></div>
+ <a class="card" href="birthday.html#shows"><div class="ph">фото</div><h3>Шоу-программы</h3><p>Название, короткое описание</p></a>
+ <a class="card" href="birthday.html#animators"><div class="ph">фото</div><h3>Аниматоры</h3><p>Название, короткое описание</p></a>
+ <div class="card"><div class="ph">фото</div><h3>Мастер-классы</h3><p>Название, короткое описание</p></div>
+ <a class="card" href="birthday.html"><div class="ph">фото</div><h3>День рождения</h3><p>Короткий анонс, пакеты на странице раздела</p></a>
 </div></div></section>
+<section class="blk"><div class="wrap"><h2>Праздники и группы</h2><p>Школы, кружки, корпоративы. Форматы, условия и заявка на отдельной странице.</p><a class="btn sec" href="groups.html">Подробнее</a></div></section>
 <section class="blk"><div class="wrap"><h2>Атмосфера парка и праздника</h2><div class="grid"><div class="ph">фото</div><div class="ph">фото</div><div class="ph">фото</div></div></div></section>
-<section class="blk"><div class="wrap"><h2>Анонсы</h2><div class="card empty"><p>Акции и события. Блок ведёт маркетинг, пустой не показывается.</p></div></div></section>
 <script src="data.js"></script><script src="app.js"></script>
 <script>document.addEventListener('DOMContentLoaded',()=>{
- $('#pg').innerHTML=PARKS.map(p=>`<a class="card" href="${parkUrl(p)}"><div class="ph">фото парка</div><h3>My Kids - ${p.city}</h3><p>${p.name}${p.addr?' · '+p.addr:' · данные уточняются'}</p></a>`).join('')})</script>
+ $('#pg').innerHTML=PARKS.map(p=>`<a class="card" href="${parkUrl(p)}"><div class="ph">фото парка</div><h3>${pname(p)}</h3><p>Короткое описание парка.</p><p style="margin-top:8px">${p.addr?p.addr+'<br>'+p.hours:'Данные уточняются'}</p><span class="btn sec" style="margin-top:12px">Подробнее о парке</span></a>`).join('')})</script>
 </body></html>
