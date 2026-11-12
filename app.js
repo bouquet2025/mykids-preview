@@ -49,7 +49,7 @@ function shell(){
 </div></header>`);
   document.body.insertAdjacentHTML('beforeend', (document.body.dataset.nocta?'':`<section class="blk"><div class="wrap" style="text-align:center"><h2>Забронируйте посещение в My Kids</h2><button class="btn wa" onclick="book()">Забронировать в WhatsApp</button></div></section>`)+`
 <footer><div class="wrap fcols">
- <div><b>My Kids</b><br>Сеть детских парков Казахстана. 11 парков в 8 городах.</div>
+ <div><a class="flogo" href="index.html"><img src="logo.webp" alt="My Kids" height="44"></a>Сеть детских парков Казахстана. 11 парков в 8 городах.</div>
  <div><a href="#">О нас</a><a href="#">Наша команда</a><a href="#">Аттракционы</a><a href="#">Правила и рекомендации</a><a href="#">Вакансии</a></div>
  <div><a href="#">Политика конфиденциальности</a><a href="#">Оферта</a><a href="#">Правила посещения</a><a href="#">Cookie</a></div>
 </div></footer>
