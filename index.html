@@ -1,0 +1,22 @@
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="robots" content="noindex,nofollow"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>My Kids — прототип главной</title><link rel="stylesheet" href="style.css"></head><body>
+<section class="hero"><div class="wrap">
+ <p class="note">ПРОТОТИП (вайрфрейм). Тексты и картинки временные, финальный дизайн будет на этапе 2.</p>
+ <h1>Детские парки My Kids в Казахстане</h1>
+ <p>Игровые зоны, дни рождения и праздники. Выберите свой парк и забронируйте в WhatsApp.</p>
+ <button class="btn" onclick="book()">Забронировать</button>
+ <a class="btn sec" href="#parks">Найти парк</a>
+</div></section>
+<section class="blk" id="parks"><div class="wrap"><h2>Наши парки</h2><div class="grid" id="pg"></div></div></section>
+<section class="blk"><div class="wrap"><h2>Направления</h2><div class="grid">
+ <a class="card" href="#"><div class="ph">фото</div><h3>Игровые зоны</h3><p>Аттракционы и лабиринты для детей</p></a>
+ <a class="card" href="#"><div class="ph">фото</div><h3>День рождения</h3><p>Пакеты, шоу, аниматоры</p></a>
+ <a class="card" href="#"><div class="ph">фото</div><h3>Праздники и группы</h3><p>Выпускные, школы, корпоративы</p></a>
+ <a class="card" href="#"><div class="ph">фото</div><h3>Цены</h3><p>Выберите парк и посмотрите цены</p></a>
+</div></div></section>
+<section class="blk"><div class="wrap"><h2>Атмосфера парка и праздника</h2><div class="grid"><div class="ph">фото</div><div class="ph">фото</div><div class="ph">фото</div></div></div></section>
+<section class="blk"><div class="wrap"><h2>Анонсы</h2><div class="card empty"><p>Акции и события. Блок ведёт маркетинг, пустой не показывается.</p></div></div></section>
+<script src="data.js"></script><script src="app.js"></script>
+<script>document.addEventListener('DOMContentLoaded',()=>{
+ $('#pg').innerHTML=PARKS.map(p=>`<a class="card" href="${parkUrl(p)}"><div class="ph">фото парка</div><h3>My Kids - ${p.city}</h3><p>${p.name}${p.addr?' · '+p.addr:' · данные уточняются'}</p></a>`).join('')})</script>
+</body></html>

@@ -1,0 +1,9 @@
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="robots" content="noindex,nofollow"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>My Kids — город</title><link rel="stylesheet" href="style.css"></head><body>
+<div class="wrap"><div class="crumbs"><a href="index.html">Главная</a> / Парки / <span id="cn"></span></div><h1 id="ct"></h1><div class="grid" id="cg" style="margin-bottom:48px"></div></div>
+<script src="data.js"></script><script src="app.js"></script>
+<script>document.addEventListener('DOMContentLoaded',()=>{
+ const cs=new URLSearchParams(location.search).get('c'),ps=cityParks(cs);
+ $('#cn').textContent=$('#ct').textContent=ps[0].city;
+ $('#cg').innerHTML=ps.map(p=>`<a class="card" href="${parkUrl(p)}"><div class="ph">фото</div><h3>My Kids - ${p.city}, ${p.name}</h3><p>${p.addr}<br>${p.hours}</p></a>`).join('')})</script>
+</body></html>
