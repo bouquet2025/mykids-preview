@@ -55,15 +55,20 @@ function exCards(p,cats){
 }
 function bookPkg(slug,tier){const p=PARKS.find(x=>x.slug===slug);if(!p||!p.wa){book();return}window.open(waLink(p,`Здравствуйте! Хочу забронировать День рождения в My Kids (${cname(p)}). Пакет: ${tier}. Детей: __. Дата: __.`),'_blank')}
 
-function book(forced){
-  const p = forced || getPark();
-  if(p && p.wa){ window.open(waLink(p, bookText(p)), '_blank'); return; }
+let ctxPark=null, bookKind='book'; // ctxPark: парк открытой страницы (не сохраняется как выбор)
+const changeText=p=>`Здравствуйте! Хочу изменить или отменить бронь в My Kids (${cname(p)}). Дата, имя и телефон брони: __.`;
+function book(forced, kind){
+  kind = kind || 'book';
+  const p = forced || ctxPark || getPark();
+  if(p && p.wa){ window.open(waLink(p, kind==='change'?changeText(p):bookText(p)), '_blank'); return; }
+  bookKind = kind;
   $('#modal').classList.add('on');
 }
+function changeBook(forced){ book(forced,'change'); }
 function pick(slug){
   chosen = slug; localStorage.setItem('park', slug);
   $('#modal').classList.remove('on');
-  book(getPark());
+  book(getPark(), bookKind);
 }
 
 function parksMenu(){
@@ -81,19 +86,20 @@ function shell(){
  <a class="logo" href="index.html"><img src="logo.webp" alt="My Kids" height="40"></a>
  <button class="burger" aria-label="Меню" onclick="$('nav').classList.toggle('on')">☰</button>
  <nav>
-  <a href="index.html">Главная</a>
-  <div class="dd"><button class="nb">Парки ▾</button><div class="menu">${parksMenu()}</div></div>
+  <a href="index.html" class="home">Главная</a>
+  <div class="dd parks"><button class="nb">Парки ▾</button><div class="menu">${parksMenu()}</div></div>
   <div class="dd"><button class="nb">День рождения ▾</button><div class="menu">
     <a href="birthday.html">Пакеты</a><a href="birthday.html#shows">Шоу и программы</a><a href="birthday.html#animators">Аниматоры</a><a href="groups.html">Праздники и группы</a></div></div>
   <a href="prices.html">Цены</a><a href="faq.html">FAQ</a><a href="contacts.html">Контакты</a>
+  <span class="lang lang-m">RU | KZ</span>
  </nav>
- <span class="lang">RU | KZ</span>
+ <span class="lang lang-d">RU | KZ</span>
  <button class="btn" onclick="book()">Забронировать</button>
 </div></header>`);
   document.body.insertAdjacentHTML('beforeend', (document.body.dataset.nocta?'':`<section class="blk"><div class="wrap" style="text-align:center"><h2>Забронируйте посещение в My Kids</h2><button class="btn wa" onclick="book()">Забронировать в WhatsApp</button></div></section>`)+`
 <footer><div class="wrap fcols">
  <div><a class="flogo" href="index.html"><img src="logo.webp" alt="My Kids" height="44"></a>Сеть детских парков Казахстана. 11 парков в 8 городах.</div>
- <div><a href="#">О нас</a><a href="#">Наша команда</a><a href="#">Аттракционы</a><a href="#">Правила и рекомендации</a><a href="#">Вакансии</a></div>
+ <div><a href="#">О нас</a><a href="#">Наша команда</a><a href="#">Аттракционы</a><a href="#">Правила и рекомендации</a><a href="#">Вакансии</a><a href="#" onclick="changeBook();return false">Изменить или отменить бронь</a></div>
  <div><a href="#">Политика конфиденциальности</a><a href="#">Оферта</a><a href="#">Правила посещения</a><a href="#">Cookie</a></div>
 </div></footer>
 <button class="btn wa fixwa" onclick="book()">Забронировать в WhatsApp</button>

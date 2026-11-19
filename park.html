@@ -5,7 +5,7 @@
 <script>
 document.addEventListener('DOMContentLoaded',()=>{
  const p=PARKS.find(x=>x.slug===new URLSearchParams(location.search).get('p'))||PARKS[0];
- localStorage.setItem('park',p.slug);chosen=p.slug;
+ ctxPark=p;
  const multi=cityParks(p.citySlug).length>1,title=`My Kids - ${p.city}${multi?', '+p.name:''}`;
  document.title=title;
  const ph=(t,h=180)=>`<div class="ph" style="min-height:${h}px">${t}</div>`;
@@ -19,6 +19,7 @@ document.addEventListener('DOMContentLoaded',()=>{
   <div class="facts"><div><b>Адрес</b>${p.addr?p.city+', '+p.addr:'уточняется'}</div><div><b>График</b>${p.hours||'уточняется'}</div></div>
   <button class="btn" onclick="book(PARKS.find(x=>x.slug==='${p.slug}'))">Забронировать</button>
   <a class="btn sec" href="#prices">Цены</a>
+  <p style="margin:12px 0 0"><a href="#" onclick="changeBook(ctxPark);return false">Изменить или отменить бронь</a></p>
  </div></section>
  <div class="pbar"><div class="wrap"><a href="#about">О парке</a><a href="#photos">Фото</a><a href="#zones">Зоны</a><a href="#prices">Цены</a><a href="#bday">День рождения</a><a href="#shows">Шоу</a><a href="#games">Игры</a><a href="#animators">Аниматоры</a><a href="#masterclass">Мастер-классы</a><a href="#info">Практическая информация</a><a href="#faq">FAQ</a></div></div>
  ${blk('about','О парке',`<p>Описание парка. Текст вносит маркетинг в CMS.</p>`,'Парк')}

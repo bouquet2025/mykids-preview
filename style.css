@@ -44,7 +44,7 @@ footer{background:#1d2433;color:#cfd4e2;padding:36px 0 90px;font-size:14px}foote
 @media(max-width:860px){
  nav{display:none;position:absolute;top:64px;left:0;right:0;background:#fff;flex-direction:column;border-bottom:1px solid var(--line);padding:8px 20px}
  nav.on{display:flex}.burger{display:block;margin-left:auto}.dd .menu{position:static;display:block;border:0;box-shadow:none;padding-left:12px}
- .bar>.btn{display:none}.fixwa{display:block}.pbar{top:64px}
+ .bar>.btn{padding:8px 12px;font-size:14px}.fixwa{display:block}.lang-d{display:none}nav .parks{order:-1}.pbar{top:64px}
 }
 table{display:block;overflow-x:auto}
 
@@ -59,3 +59,6 @@ table{display:block;overflow-x:auto}
 .logo img{display:block;height:40px;width:auto}
 
 footer .flogo{display:block;width:fit-content;padding:0;margin-bottom:12px}footer .flogo img{display:block;height:44px;width:auto}
+
+.lang-m{display:none}
+@media(max-width:860px){.lang-m{display:inline-block;align-self:flex-start;margin:8px 10px}}
