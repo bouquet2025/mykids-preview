@@ -13,7 +13,7 @@ function waLink(p, text){ return `https://wa.me/${p.wa}?text=${encodeURIComponen
 function bookText(p){ return p ? `Здравствуйте! Хочу забронировать в My Kids (${p.city}${cityParks(p.citySlug).length>1?', '+p.name:''}).` : 'Здравствуйте! Хочу забронировать посещение My Kids.'; }
 
 // ---- Данные из xlsx маркетинга: график, цены, скидки, пакеты, допуслуги (см. data.js, scripts/build-prices.py)
-const hoursText=s=>s[0]===s[2]?`Пн, ср по вс: ${s[0]}. Вт (санитарный день, открытие позже): ${s[1]}`:`Пн: ${s[0]}. Вт (санитарный день): ${s[1]}. Ср по вс: ${s[2]}`;
+const hoursText=s=>s[0]===s[1]&&s[1]===s[2]?`Ежедневно, ${s[0]}`:s[0]===s[2]?`Пн, ср по вс: ${s[0]}. Вт (санитарный день, открытие позже): ${s[1]}`:`Пн: ${s[0]}. Вт (санитарный день): ${s[1]}. Ср по вс: ${s[2]}`;
 PARKS.forEach(p=>{const s=SCHED[p.slug]; if(s) p.hours=hoursText(s)});
 const money=n=>typeof n==='number'?(n===0?'бесплатно':n.toLocaleString('ru-RU')+' ₸'):String(n).replace(/\d{4,}/g,m=>(+m).toLocaleString('ru-RU'))+' ₸';
 const br=t=>String(t).replace(/\n+/g,'<br>');
