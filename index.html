@@ -9,7 +9,7 @@
  <div class="ph">фото реального парка</div>
 </div></section>
 <section class="blk"><div class="wrap"><h2>Акции</h2><div class="ph" style="min-height:120px">место под акцию или слайдер, блок ведёт маркетинг, пустой не показывается</div>
- <div class="grid" style="margin-top:16px"><div class="card"><h3>Тариф 1</h3><p>Условия</p><div class="price">от [цена]</div></div><div class="card"><h3>Тариф 2</h3><p>Условия</p><div class="price">от [цена]</div></div><div class="card"><h3>Тариф 3</h3><p>Условия</p><div class="price">от [цена]</div></div></div></div></section>
+ <div class="grid" id="pc" style="margin-top:16px"></div></div></section>
 <section class="blk" id="parks"><div class="wrap"><h2>Наши парки</h2><div class="grid" id="pg"></div></div></section>
 <section class="blk"><div class="wrap"><h2>Что есть в My Kids</h2><div class="grid">
  <div class="card"><div class="ph">фото</div><h3>Игровые зоны</h3><p>Название, короткое описание</p></div>
@@ -24,5 +24,7 @@
 <section class="blk"><div class="wrap"><h2>Атмосфера парка и праздника</h2><div class="grid"><div class="ph">фото</div><div class="ph">фото</div><div class="ph">фото</div></div></div></section>
 <script src="data.js"></script><script src="app.js"></script>
 <script>document.addEventListener('DOMContentLoaded',()=>{
+ const mn=f=>Math.min(...Object.values(PRICE).map(f));
+ $('#pc').innerHTML=`<div class="card"><h3>Ребёнок, будни</h3><p>Безлимит на целый день, от 3 до 17 лет</p><div class="price">от ${money(mn(x=>x['Будний Безлимит']))}</div></div><div class="card"><h3>Ребёнок, выходные и праздничные</h3><p>Безлимит на целый день, от 3 до 17 лет</p><div class="price">от ${money(mn(x=>x['Выходной Безлимит']))}</div></div><div class="card"><h3>Студенты</h3><p>Специальная цена при предъявлении студенческого билета</p><div class="price">от ${money(Math.min(...Object.values(DPRICE).map(x=>x.student.wd)))}</div></div>`;
  $('#pg').innerHTML=PARKS.map(p=>`<a class="card" href="${parkUrl(p)}"><div class="ph">фото парка</div><h3>${pname(p)}</h3><p>Короткое описание парка.</p><p style="margin-top:8px">${p.addr?p.addr+'<br>'+p.hours:'Данные уточняются'}</p><span class="btn sec" style="margin-top:12px">Подробнее о парке</span></a>`).join('')})</script>
 </body></html>

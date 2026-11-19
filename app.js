@@ -12,6 +12,49 @@ const pname=p=>`My Kids - ${p.city}${multi(p)?', '+p.name:''}`;
 function waLink(p, text){ return `https://wa.me/${p.wa}?text=${encodeURIComponent(text)}`; }
 function bookText(p){ return p ? `Здравствуйте! Хочу забронировать в My Kids (${p.city}${cityParks(p.citySlug).length>1?', '+p.name:''}).` : 'Здравствуйте! Хочу забронировать посещение My Kids.'; }
 
+// ---- Данные из xlsx маркетинга: график, цены, скидки, пакеты, допуслуги (см. data.js, scripts/build-prices.py)
+const hoursText=s=>s[0]===s[2]?`Пн, ср по вс: ${s[0]}. Вт (санитарный день, открытие позже): ${s[1]}`:`Пн: ${s[0]}. Вт (санитарный день): ${s[1]}. Ср по вс: ${s[2]}`;
+PARKS.forEach(p=>{const s=SCHED[p.slug]; if(s) p.hours=hoursText(s)});
+const money=n=>typeof n==='number'?(n===0?'бесплатно':n.toLocaleString('ru-RU')+' ₸'):String(n).replace(/\d{4,}/g,m=>(+m).toLocaleString('ru-RU'))+' ₸';
+const br=t=>String(t).replace(/\n+/g,'<br>');
+const cname=p=>p.city+(multi(p)?', '+p.name:'');
+const noData=`<p style="color:var(--mut)">Цены для этого парка уточняются.</p>`;
+const TROWS=[
+ ['Ребёнок','от 3 до 17 лет','Будний Безлимит','Выходной Безлимит'],
+ ['Играющий взрослый','от 18 лет','Безлимит Родитель Будни','Безлимит Родитель Выходной'],
+ ['Ребёнок из многодетной семьи','от 3 до 17 лет, нужно удостоверение многодетной семьи','Многодетные Будни','Многодетные Выходные'],
+ ['Малыш','от 1 до 2 лет, нужен документ о возрасте','Безлимит Малыш Будний','Безлимит Малыш Выходной'],
+ ['Ребёнок до 1 года','нужен документ о возрасте','Дети до 1 года','Дети до 1 года'],
+ ['Особенный ребёнок','от 3 до 17 лет, нужен документ, подтверждающий льготу','Особенные дети','Особенные дети'],
+ ['Именинник','в день рождения, нужен документ','Именинник Парк Будни','Именинник Парк Выходной'],
+ ['Сопровождающий взрослый','от 18 лет, только для сопровождения','Сопровождение','Сопровождение']];
+const hasPrices=p=>!!(p&&PRICE[p.slug]);
+function tariffTable(p){
+ if(!hasPrices(p)) return noData; const pr=PRICE[p.slug];
+ return `<div class="tw"><table><tr><th>Тариф и условия</th><th>Будни</th><th>Выходные</th></tr>${TROWS.map(([n,c,a,b])=>`<tr><td>${n}<br><small style="color:var(--mut)">${c}</small></td>${a===b?`<td colspan="2">${money(pr[a])}</td>`:`<td>${money(pr[a])}</td><td>${money(pr[b])}</td>`}</tr>`).join('')}</table></div>
+<p style="color:var(--mut);font-size:14px">Билет безлимитный на целый день: посещение парка и игра на аттракционах. Гости и именинник в составе пакета дня рождения проходят по билету пакета, взрослый гость дня рождения: ${money(pr['ДР Сопровождение'])}. Возврат осуществляется в соответствии с законодательством Республики Казахстан.</p>`;
+}
+const pr2=(e)=>e.any!==undefined?money(e.any):e.wd===e.we?money(e.wd):`Будни ${money(e.wd)} · Выходные ${money(e.we)}`;
+function discountCards(p){
+ const d=DPRICE[p.slug]; if(!d) return '';
+ return `<div class="grid">${Object.keys(d).map(k=>{const m=DISC[k],e=d[k];const desc=k==='combo'?`Один билет даёт право посетить ${e.name.includes('3')?'три':'два'} участвующих парка на установленных условиях.`:m.desc;
+ return `<div class="card"><h3>${k==='combo'?e.name:m.name}</h3><p>${desc}</p><p><small>Кому: ${m.who}</small></p><div class="price">${pr2(e)}</div></div>`}).join('')}</div>`;
+}
+function pkgTiers(p){const out=[];(PKG[p.slug]||[]).forEach(r=>{let t=out.find(x=>x.tier===r.tier);if(!t)out.push(t={tier:r.tier,wd:null,we:null});t[r.day]=r});return out}
+function pkgCards(p,btn){
+ const ts=pkgTiers(p); if(!ts.length) return noData;
+ return `<div class="grid">${ts.map(t=>{const a=t.wd,b=t.we,r=b||a;const same=(f)=>!a||!b||a[f]===b[f];const dayRow=(f,l)=>same(f)?(r[f]?`<p>${l}: ${br(r[f])}</p>`:''):`<p>${l}: будни ${br(a[f]||'нет')}; выходные ${br(b[f]||'нет')}</p>`;
+ return `<div class="card"><h3>${t.tier}</h3><p>${r.dur}. Детей в пакете: ${r.kids}, сверх этого: доплата ${a&&b&&a.sur!==b.sur?`${money(a.sur)} в будни, ${money(b.sur)} в выходные`:money(r.sur)} за ребёнка. Максимум детей: ${r.max.toLowerCase()}.</p>
+ <details><summary>Что входит</summary>${dayRow('program','Программа')}${dayRow('food','Питание')}${dayRow('extra','Дополнительно')}</details>
+ <div class="price">${a?`Будни ${money(a.price)}`:''}${a&&b?'<br>':''}${b?`Выходные ${money(b.price)}`:''}</div>${btn?`<br>${btn(t.tier)}`:''}</div>`}).join('')}</div>`;
+}
+const exFor=(p,cats)=>EXTRAS.filter(e=>cats.includes(e.cat)&&(!e.parks||e.parks.includes(p.slug)));
+function exCards(p,cats){
+ const l=exFor(p,cats); if(!l.length) return '';
+ return `<div class="grid">${l.map(e=>`<div class="card"><h3>${e.name}</h3>${e.desc?`<p>${e.desc}</p>`:''}<p><small>${e.cat}${typeof e.dur==='number'&&e.dur?`, ${e.dur} мин`:''}</small></p><div class="price">${money(e.price)}</div></div>`).join('')}</div>`;
+}
+function bookPkg(slug,tier){const p=PARKS.find(x=>x.slug===slug);if(!p||!p.wa){book();return}window.open(waLink(p,`Здравствуйте! Хочу забронировать День рождения в My Kids (${cname(p)}). Пакет: ${tier}. Детей: __. Дата: __.`),'_blank')}
+
 function book(forced){
   const p = forced || getPark();
   if(p && p.wa){ window.open(waLink(p, bookText(p)), '_blank'); return; }

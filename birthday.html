@@ -1,19 +1,17 @@
 <!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="robots" content="noindex,nofollow"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>День рождения | My Kids</title><link rel="stylesheet" href="style.css"></head><body>
 <main class="wrap" style="padding-bottom:48px"><div class="crumbs"><a href="index.html">Главная</a> / День рождения</div><h1>День рождения</h1>
-<p class="note">ПРОТОТИП. Пакеты, программы и аниматоры зависят от парка. Меню кафе в разделе нет. Все тексты и цены условные.</p>
+<p class="note">ПРОТОТИП. Пакеты, программы и цены зависят от парка и взяты из файла маркетинга от 19 ноября 2026. Аниматоры и ответы на вопросы пока заглушки. Меню кафе в разделе нет.</p>
 <h2>Выберите парк</h2><div class="grid" id="pk" style="margin-bottom:24px"></div>
-<section id="packages"><h2>Пакеты</h2><div class="grid" id="pkg"></div>
-<h3>Дополнительные услуги</h3><div class="grid"><div class="card"><p>[Услуга 1]</p><div class="price">[цена]</div></div><div class="card"><p>[Услуга 2]</p><div class="price">[цена]</div></div></div></section>
-<section id="shows"><h2>Шоу и программы</h2><div class="grid">
-<div class="card"><h3>[Шоу 1]</h3><p>Что получает клиент: [описание]</p><p>Длительность: [мин] · Возраст: [от и до] · Формат: [формат]</p><p><span class="tag">Доступно: [список парков]</span></p></div>
-<div class="card"><h3>[Мастер-класс 1]</h3><p>Что получает клиент: [описание]</p><p>Длительность: [мин] · Возраст: [от и до] · Формат: [формат]</p><p><span class="tag">Доступно: [список парков]</span></p></div></div></section>
+<section id="packages"><h2>Пакеты</h2><div id="pkg"></div>
+<h3>Дополнительные услуги</h3><div id="dop"></div></section>
+<section id="shows"><h2>Шоу и программы</h2><div id="shw"></div><h3>Мастер-классы</h3><div id="mk"></div></section>
 <section id="animators"><h2>Аниматоры</h2><div class="grid">
 <div class="card"><div class="ph" style="min-height:120px">фото</div><h3>[Персонаж 1]</h3><p>Описание программы</p><p><span class="tag">Доступен: [список парков]</span></p></div>
 <div class="card"><div class="ph" style="min-height:120px">фото</div><h3>[Персонаж 2]</h3><p>Описание программы</p><p><span class="tag">Доступен: [список парков]</span></p></div></div></section>
 <section id="book"><h2>Забронировать праздник</h2><div class="fld">
-<label>Пакет<select id="bp"><option value="">Выбрать в чате</option><option>[Пакет 1]</option><option>[Пакет 2]</option></select></label>
-<label>Программа<select id="bs"><option value="">Выбрать в чате</option><option>[Шоу 1]</option><option>[Мастер-класс 1]</option></select></label>
+<label>Пакет<select id="bp"><option value="">Выбрать в чате</option></select></label>
+<label>Программа<select id="bs"><option value="">Выбрать в чате</option></select></label>
 <label>Аниматор<select id="ba"><option value="">Выбрать в чате</option><option>[Персонаж 1]</option><option>[Персонаж 2]</option></select></label>
 <label>Детей<input id="bn" type="number" min="1"></label><label>Дата<input id="bd" type="date"></label>
 <button class="btn wa" onclick="bk()">Забронировать в WhatsApp</button></div></section>
@@ -23,5 +21,11 @@
 <script src="data.js"></script><script src="app.js"></script>
 <script>document.addEventListener('DOMContentLoaded',()=>{const pk=$('#pk');window.draw=()=>{pk.innerHTML=PARKS.map(p=>`<button class="card" style="text-align:left;cursor:pointer;${p.slug===chosen?'border-color:var(--acc);border-width:2px':''}" onclick="chosen='${p.slug}';localStorage.setItem('park',chosen);draw();show()"><h3>${p.city}</h3><p>${p.name}</p></button>`).join('')};const F=['Нужна ли предоплата?','Как перенести или отменить праздник?','Можно ли принести свой торт?','Сколько длится праздник?'];
 $('#bf').innerHTML=F.map(q=>`<details><summary>${q}</summary><p>Ответ вносит команда My Kids.</p></details>`).join('');
-$('#pkg').innerHTML=['[Пакет 1]','[Пакет 2]'].map(n=>`<div class="card"><h3>${n}</h3><p>Детей: [число]. Длительность: [время]. Что входит: [состав]</p><div class="price">[цена]</div><br><button class="btn sec" onclick="$('#bp').value='${n}';location.hash='book'">Выбрать</button></div>`).join('');
-window.bk=()=>{const p=getPark();if(!p||!p.wa){book();return}const v=(i,d)=>$(i).value||d;const t=`Здравствуйте! Хочу забронировать День рождения в My Kids (${p.city}). Пакет: ${v('#bp','___')}. Программа: ${v('#bs','___')}. Детей: ${v('#bn','___')}. Дата: ${v('#bd','___')}. Аниматор: ${v('#ba','___')}.`;window.open(waLink(p,t),'_blank')};window.show=()=>{};draw();})</script></body></html>
+const fillSel=(id,items)=>{$(id).innerHTML='<option value="">Выбрать в чате</option>'+items.map(n=>`<option>${n}</option>`).join('')};
+window.pickPkg=n=>{$('#bp').value=n;location.hash='book'};
+window.bk=()=>{const p=getPark();if(!p||!p.wa){book();return}const v=(i,d)=>$(i).value||d;const t=`Здравствуйте! Хочу забронировать День рождения в My Kids (${p.city}). Пакет: ${v('#bp','___')}. Программа: ${v('#bs','___')}. Детей: ${v('#bn','___')}. Дата: ${v('#bd','___')}. Аниматор: ${v('#ba','___')}.`;window.open(waLink(p,t),'_blank')};window.show=()=>{const p=getPark(),ok=hasPrices(p);
+$('#pkg').innerHTML=!p?'<p style="color:var(--mut)">Выберите парк, чтобы увидеть пакеты.</p>':pkgCards(p,t=>`<button class="btn sec" onclick="pickPkg('${t}')">Выбрать</button>`);
+$('#dop').innerHTML=ok?exCards(p,['Дополнительные услуги','Поздравления']):'';
+$('#shw').innerHTML=ok?exCards(p,['Шоу программы','Квесты','Активные игры','Дополнительные программы']):'';
+$('#mk').innerHTML=ok?exCards(p,['Мастер-классы']):'';
+fillSel('#bp',ok?pkgTiers(p).map(t=>t.tier):[]);fillSel('#bs',ok?exFor(p,['Шоу программы','Квесты','Мастер-классы','Активные игры']).map(e=>e.name):[]);};draw();show();})</script></body></html>
