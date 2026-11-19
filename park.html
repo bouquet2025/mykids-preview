@@ -34,8 +34,8 @@ document.addEventListener('DOMContentLoaded',()=>{
 <div class="card"><h3>График</h3><p>${p.hours||'уточняется'}<br>Праздничные дни: [график]<br><small>График может меняться, актуальное уточняйте в WhatsApp.</small></p></div>
 <div class="card"><h3>Адрес и карта</h3><p>${p.addr?p.city+', '+p.addr:'уточняется'}<br>${p.map?`<a href="${p.map}" target="_blank">2ГИС</a> · <a href="${gmap(p)}" target="_blank">Google</a>`:''}</p></div>
 <div class="card"><h3>Контакты</h3><p>${p.wa?fmtPhone(p.wa)+'<br>WhatsApp парка':'уточняется'}</p></div>
-<div class="card"><h3>Правила посещения</h3><p>Текст</p></div><div class="card"><h3>Условия пребывания</h3><p>Текст</p></div><div class="card"><h3>Сопровождающие</h3><p>Текст</p></div>
-<div class="card"><h3>Одежда, носки и тапочки</h3><p>Текст</p></div><div class="card"><h3>Парковка</h3><p>Текст</p></div><div class="card"><h3>Торты</h3><p>Текст</p></div><div class="card"><h3>Другая важная информация</h3><p>Текст</p></div></div>${ph('карта 2ГИС / Google',220)}`,'Парк')}
+<div class="card"><h3>Правила посещения</h3><p>${(typeof INFO!=='undefined'&&INFO[p.slug]&&INFO[p.slug].rules)||'Текст'}</p></div><div class="card"><h3>Условия пребывания</h3><p>${(typeof INFO!=='undefined'&&INFO[p.slug]&&INFO[p.slug].stay)||'Текст'}</p></div><div class="card"><h3>Сопровождающие</h3><p>Текст</p></div>
+<div class="card"><h3>Одежда, носки и тапочки</h3><p>${(typeof INFO!=='undefined'&&INFO[p.slug]&&INFO[p.slug].clothes)||'Текст'}</p></div><div class="card"><h3>Парковка</h3><p>Текст</p></div><div class="card"><h3>Торты</h3><p>Текст</p></div><div class="card"><h3>Другая важная информация</h3><p>Текст</p></div></div>${ph('карта 2ГИС / Google',220)}`,'Парк')}
  ${blk('faq','Вопросы и ответы',`<details><summary>Вопрос 1</summary><p>Ответ</p></details><details><summary>Вопрос 2</summary><p>Ответ</p></details>`,'Вопрос FAQ (все парки или этот)')}
  <section class="blk"><div class="wrap" style="text-align:center"><h2>Забронируйте посещение в ${title}</h2><button class="btn wa" onclick="book(PARKS.find(x=>x.slug==='${p.slug}'))">Написать в WhatsApp</button></div></section>`;
 });
